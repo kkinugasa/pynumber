@@ -1,6 +1,9 @@
 """Set-theoretic construction of natural numbers"""
 from __future__ import annotations
 
+import functools
+import operator
+
 
 class NaturalNumber(tuple):
     """Natural number
@@ -70,5 +73,27 @@ class NaturalNumber(tuple):
     def __le__(self: NaturalNumber, obj: object) -> bool:
         return not self > obj
 
+    def __int__(self: NaturalNumber) -> int:
+        return len(self)
+
 
 ZERO = NaturalNumber(())
+
+
+def create_natural_number_from_int(integer: int) -> NaturalNumber:
+    """Create NaturalNumber from integer
+
+    Args:
+        integer (int): integer
+
+    Raises:
+        ValueError: integer is negative
+
+    Returns:
+        NaturalNumber: NaturalNumber instance that represents an argument integer
+    """
+    if integer < 0:
+        raise ValueError("Arg must be a non-negative integer.")
+    if integer == 0:
+        return ZERO
+    return functools.reduce(operator.add, [ZERO.successor] * integer)

@@ -1,8 +1,7 @@
 """Test code of NaturalNumber class"""
-
 import pytest
 
-from pynumber import ZERO, NaturalNumber
+from pynumber import ZERO, NaturalNumber, create_natural_number_from_int
 
 
 def test_equality() -> None:
@@ -64,3 +63,17 @@ def test_multiplication() -> None:
     assert two * one == two
     assert two * three == six
     assert three * two == six
+
+
+def test_int() -> None:
+    """Test __int__"""
+    assert int(ZERO) == 0
+    assert int(ZERO.successor) == 1
+
+
+def test_create_from_int() -> None:
+    """Test create_natural_number_from_int"""
+    assert create_natural_number_from_int(0) == ZERO
+    assert create_natural_number_from_int(1) == ZERO.successor
+    with pytest.raises(ValueError):
+        _ = create_natural_number_from_int(-1)
