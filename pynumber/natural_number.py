@@ -73,6 +73,9 @@ class NaturalNumber(tuple):
         # m * n = m * (n - 1) + m
         return self * obj.predecessor + self
 
+    def __pos__(self: NaturalNumber) -> NaturalNumber:
+        return self
+
     def __int__(self: NaturalNumber) -> int:
         return len(self)
 
@@ -94,6 +97,4 @@ def create_natural_number_from_int(integer: int) -> NaturalNumber:
     """
     if integer < 0:
         raise ValueError("Arg must be a non-negative integer.")
-    if integer == 0:
-        return ZERO
-    return functools.reduce(operator.add, [ZERO.successor] * integer)
+    return sum([ZERO.successor] * integer, ZERO)

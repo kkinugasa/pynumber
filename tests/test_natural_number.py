@@ -69,6 +69,12 @@ def test_multiplication() -> None:
         _ = ZERO * ()
 
 
+def test_unary_arithmetic_operation() -> None:
+    """Test unary arithmetic operation"""
+    one = ZERO.successor
+    assert +one == one
+
+
 def test_int() -> None:
     """Test __int__"""
     assert int(ZERO) == 0

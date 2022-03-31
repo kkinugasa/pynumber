@@ -88,5 +88,28 @@ class Integer(
             self.positive * obj.negative + self.negative * obj.positive,
         )
 
+    def __pos__(self: Integer) -> Integer:
+        return self
+
+    def __neg__(self: Integer) -> Integer:
+        return Integer(self.negative, self.positive)
+
+    def __abs__(self: Integer) -> Integer:
+        return max(self, -self)
+
     def __int__(self: Integer) -> int:
         return int(self.positive) - int(self.negative)
+
+
+def create_integer_from_int(integer: int) -> Integer:
+    """Create Integer from integer
+
+    Args:
+        integer (int): integer
+
+    Returns:
+        Integer: Integer instance that represents an argument integer
+    """
+    pos = create_natural_number_from_int(max(integer, 0))
+    neg = create_natural_number_from_int(max(-integer, 0))
+    return Integer(pos, neg)
