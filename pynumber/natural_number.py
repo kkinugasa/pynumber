@@ -33,24 +33,6 @@ class NaturalNumber(tuple):
             raise ValueError("ZERO does not have a predecessor")
         return NaturalNumber(self[0:-1])
 
-    def __add__(self: NaturalNumber, obj: object) -> NaturalNumber:
-        if not isinstance(obj, NaturalNumber):
-            raise TypeError(f"{obj} is not 'NaturalNumber'")
-        # if obj == zero
-        if not obj:
-            return self
-        # m + n = (m + 1) + (n - 1)
-        return self.successor + obj.predecessor
-
-    def __mul__(self: NaturalNumber, obj: object) -> NaturalNumber:
-        if not isinstance(obj, NaturalNumber):
-            raise TypeError(f"{obj} is not 'NaturalNumber'")
-        # if obj == zero
-        if not obj:
-            return obj
-        # m * n = m * (n - 1) + m
-        return self * obj.predecessor + self
-
     def __eq__(self: NaturalNumber, obj: object) -> bool:
         return isinstance(obj, NaturalNumber) and tuple(self) == tuple(obj)
 
@@ -72,6 +54,24 @@ class NaturalNumber(tuple):
 
     def __le__(self: NaturalNumber, obj: object) -> bool:
         return not self > obj
+
+    def __add__(self: NaturalNumber, obj: object) -> NaturalNumber:
+        if not isinstance(obj, NaturalNumber):
+            raise TypeError(f"{obj} is not 'NaturalNumber'")
+        # if obj == zero
+        if not obj:
+            return self
+        # m + n = (m + 1) + (n - 1)
+        return self.successor + obj.predecessor
+
+    def __mul__(self: NaturalNumber, obj: object) -> NaturalNumber:
+        if not isinstance(obj, NaturalNumber):
+            raise TypeError(f"{obj} is not 'NaturalNumber'")
+        # if obj == zero
+        if not obj:
+            return obj
+        # m * n = m * (n - 1) + m
+        return self * obj.predecessor + self
 
     def __int__(self: NaturalNumber) -> int:
         return len(self)

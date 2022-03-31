@@ -18,7 +18,7 @@ def test_equality() -> None:
 def test_inequality() -> None:
     """Test inequality"""
     one = NaturalNumber(((),))
-    assert ZERO < one
+    assert one >= ZERO
     assert ZERO <= ZERO
     with pytest.raises(TypeError):
         _ = ZERO < ((),)
@@ -50,6 +50,8 @@ def test_addition() -> None:
     assert ZERO + ZERO == ZERO
     assert one + ZERO == one
     assert one + two == three
+    with pytest.raises(TypeError):
+        _ = ZERO + ()
 
 
 def test_multiplication() -> None:
@@ -63,6 +65,8 @@ def test_multiplication() -> None:
     assert two * one == two
     assert two * three == six
     assert three * two == six
+    with pytest.raises(TypeError):
+        _ = ZERO * ()
 
 
 def test_int() -> None:
