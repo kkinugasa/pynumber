@@ -25,5 +25,13 @@ poetry add git+https://github.com/kkinugasa/pynumber.git
 ### Install with pip
 
 ```sh
-pip install git+https://github.com/kkinugasa/reversi.git
+pip install git+https://github.com/kkinugasa/pynumber.git
+```
+
+## Documentation
+
+After pulling this repo and running `poetry install`, run the command:
+
+```sh
+poetry run mkdocs serve
 ```
