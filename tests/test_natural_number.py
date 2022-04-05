@@ -1,13 +1,13 @@
-"""Test code of NaturalNumber class"""
+"""Test code of Natural class"""
 import pytest
 
-from pynumber import ZERO, NaturalNumber, create_natural_number_from_int
+from pynumber import ZERO, Natural, create_natural_from_int
 
 
 def test_equality() -> None:
     """Test __eq__ and __ne__"""
-    zero = NaturalNumber(())
-    one = NaturalNumber(((),))
+    zero = Natural(())
+    one = Natural(((),))
     assert not ZERO == ()
     assert ZERO == zero
     assert one == ZERO.successor
@@ -17,7 +17,7 @@ def test_equality() -> None:
 
 def test_inequality() -> None:
     """Test inequality"""
-    one = NaturalNumber(((),))
+    one = Natural(((),))
     assert one >= ZERO
     assert ZERO <= ZERO
     with pytest.raises(TypeError):
@@ -28,8 +28,8 @@ def test_inequality() -> None:
 
 def test_successor() -> None:
     """Test successor"""
-    one = NaturalNumber(((),))
-    two = NaturalNumber((*tuple(one), tuple(one)))
+    one = Natural(((),))
+    two = Natural((*tuple(one), tuple(one)))
     assert ZERO.successor == one
     assert ZERO.successor.successor == two
 
@@ -83,7 +83,7 @@ def test_int() -> None:
 
 def test_create_from_int() -> None:
     """Test create_natural_number_from_int"""
-    assert create_natural_number_from_int(0) == ZERO
-    assert create_natural_number_from_int(1) == ZERO.successor
+    assert create_natural_from_int(0) == ZERO
+    assert create_natural_from_int(1) == ZERO.successor
     with pytest.raises(ValueError):
-        _ = create_natural_number_from_int(-1)
+        _ = create_natural_from_int(-1)

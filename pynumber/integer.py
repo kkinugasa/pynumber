@@ -3,15 +3,13 @@ from __future__ import annotations
 
 from typing import NamedTuple
 
-from pynumber.natural_number import NaturalNumber, create_natural_number_from_int
+from pynumber.natural_number import Natural, create_natural_from_int
 
 
-class Integer(
-    NamedTuple("Integer", [("positive", NaturalNumber), ("negative", NaturalNumber)])
-):
+class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural)])):
     """Integer
 
-        Integer is an equivalence class of NaturalNumber pairs.
+        Integer is an equivalence class of Natural pairs.
         One of a pair is a positive part and the other is a negative part.
         The equivalence relation (a, b) ~ (c, d) is a + d == b + c
 
@@ -19,9 +17,7 @@ class Integer(
         https://math.stackexchange.com/questions/1695198/constructing-integers-as-equivalence-classes-of-pairs-of-natural-numbers
     """
 
-    def __new__(
-        cls: type[Integer], positive: NaturalNumber, negative: NaturalNumber
-    ) -> Integer:
+    def __new__(cls: type[Integer], positive: Natural, negative: Natural) -> Integer:
         """new
 
         For better performance, a canonical representative is selected,
@@ -31,15 +27,15 @@ class Integer(
 
         Args:
             cls (type[Integer]): cls
-            positive (NaturalNumber): positive part of integer
-            negative (NaturalNumber): negative part of integer
+            positive (Natural): positive part of integer
+            negative (Natural): negative part of integer
 
         Returns:
             Integer: integer
         """
         integer = int(positive) - int(negative)
-        pos = create_natural_number_from_int(max(integer, 0))
-        neg = create_natural_number_from_int(max(-integer, 0))
+        pos = create_natural_from_int(max(integer, 0))
+        neg = create_natural_from_int(max(-integer, 0))
         return super().__new__(cls, pos, neg)
 
     def __eq__(self: Integer, obj: object) -> bool:
@@ -110,6 +106,6 @@ def create_integer_from_int(integer: int) -> Integer:
     Returns:
         Integer: Integer instance that represents an argument integer
     """
-    pos = create_natural_number_from_int(max(integer, 0))
-    neg = create_natural_number_from_int(max(-integer, 0))
+    pos = create_natural_from_int(max(integer, 0))
+    neg = create_natural_from_int(max(-integer, 0))
     return Integer(pos, neg)
