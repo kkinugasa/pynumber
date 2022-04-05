@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import NamedTuple
 
-from pynumber.natural_number import Natural, create_natural_from_int
+from pynumber.natural import Natural, create_natural_from_int
 
 
 class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural)])):
