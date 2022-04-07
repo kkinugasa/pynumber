@@ -25,50 +25,47 @@ class Natural(tuple):
         Returns:
             Natural: predecessor
         """
-        # if obj == zero
-        if not self:
+        if self == ZERO:
             raise ValueError("ZERO does not have a predecessor")
         return Natural(self[0:-1])
 
-    def __eq__(self: Natural, obj: object) -> bool:
-        return isinstance(obj, Natural) and tuple(self) == tuple(obj)
+    def __eq__(self: Natural, other: object) -> bool:
+        return isinstance(other, Natural) and tuple(self) == tuple(other)
 
-    def __ne__(self: Natural, obj: object) -> bool:
-        return not self == obj
+    def __ne__(self: Natural, other: object) -> bool:
+        return not self == other
 
-    def __lt__(self: Natural, obj: object) -> bool:
-        if not isinstance(obj, Natural):
-            raise TypeError(f"{obj} is not 'Natural'")
-        return tuple(self) in tuple(obj)
+    def __lt__(self: Natural, other: object) -> bool:
+        if not isinstance(other, Natural):
+            raise TypeError(f"{other} is not 'Natural'")
+        return tuple(self) in tuple(other)
 
-    def __gt__(self: Natural, obj: object) -> bool:
-        if not isinstance(obj, Natural):
-            raise TypeError(f"{obj} is not 'Natural'")
-        return tuple(obj) in tuple(self)
+    def __gt__(self: Natural, other: object) -> bool:
+        if not isinstance(other, Natural):
+            raise TypeError(f"{other} is not 'Natural'")
+        return tuple(other) in tuple(self)
 
-    def __ge__(self: Natural, obj: object) -> bool:
-        return not self < obj
+    def __ge__(self: Natural, other: object) -> bool:
+        return not self < other
 
-    def __le__(self: Natural, obj: object) -> bool:
-        return not self > obj
+    def __le__(self: Natural, other: object) -> bool:
+        return not self > other
 
-    def __add__(self: Natural, obj: object) -> Natural:
-        if not isinstance(obj, Natural):
-            raise TypeError(f"{obj} is not 'Natural'")
-        # if obj == zero
-        if not obj:
+    def __add__(self: Natural, other: object) -> Natural:
+        if not isinstance(other, Natural):
+            raise TypeError(f"{other} is not 'Natural'")
+        if other == ZERO:
             return self
         # m + n = (m + 1) + (n - 1)
-        return self.successor + obj.predecessor
+        return self.successor + other.predecessor
 
-    def __mul__(self: Natural, obj: object) -> Natural:
-        if not isinstance(obj, Natural):
-            raise TypeError(f"{obj} is not 'Natural'")
-        # if obj == zero
-        if not obj:
-            return obj
+    def __mul__(self: Natural, other: object) -> Natural:
+        if not isinstance(other, Natural):
+            raise TypeError(f"{other} is not 'Natural'")
+        if other == ZERO:
+            return other
         # m * n = m * (n - 1) + m
-        return self * obj.predecessor + self
+        return self * other.predecessor + self
 
     def __pos__(self: Natural) -> Natural:
         return self

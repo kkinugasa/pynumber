@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import NamedTuple
 
-from pynumber.natural import Natural, create_natural_from_int
+from pynumber.natural import ZERO, Natural, create_natural_from_int
 
 
 class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural)])):
@@ -38,50 +38,50 @@ class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural
         neg = create_natural_from_int(max(-integer, 0))
         return super().__new__(cls, pos, neg)
 
-    def __eq__(self: Integer, obj: object) -> bool:
+    def __eq__(self: Integer, other: object) -> bool:
         return (
-            isinstance(obj, Integer)
-            and self.positive + obj.negative == self.negative + obj.positive
+            isinstance(other, Integer)
+            and self.positive + other.negative == self.negative + other.positive
         )
 
-    def __ne__(self: Integer, obj: object) -> bool:
-        return not self == obj
+    def __ne__(self: Integer, other: object) -> bool:
+        return not self == other
 
-    def __lt__(self: Integer, obj: object) -> bool:
-        if not isinstance(obj, Integer):
-            raise TypeError(f"{obj} is not 'Integer'")
-        return self.positive + obj.negative < self.negative + obj.positive
+    def __lt__(self: Integer, other: object) -> bool:
+        if not isinstance(other, Integer):
+            raise TypeError(f"{other} is not 'Integer'")
+        return self.positive + other.negative < self.negative + other.positive
 
-    def __gt__(self: Integer, obj: object) -> bool:
-        if not isinstance(obj, Integer):
-            raise TypeError(f"{obj} is not 'Integer'")
-        return self.positive + obj.negative > self.negative + obj.positive
+    def __gt__(self: Integer, other: object) -> bool:
+        if not isinstance(other, Integer):
+            raise TypeError(f"{other} is not 'Integer'")
+        return self.positive + other.negative > self.negative + other.positive
 
-    def __ge__(self: Integer, obj: object) -> bool:
-        return not self < obj
+    def __ge__(self: Integer, other: object) -> bool:
+        return not self < other
 
-    def __le__(self: Integer, obj: object) -> bool:
-        return not self > obj
+    def __le__(self: Integer, other: object) -> bool:
+        return not self > other
 
-    def __add__(self: Integer, obj: object) -> Integer:
-        if not isinstance(obj, Integer):
-            raise TypeError(f"{obj} is not 'Integer'")
+    def __add__(self: Integer, other: object) -> Integer:
+        if not isinstance(other, Integer):
+            raise TypeError(f"{other} is not 'Integer'")
         # (a - b) + (c - d) = (a + c) - (b + d)
-        return Integer(self.positive + obj.positive, self.negative + obj.negative)
+        return Integer(self.positive + other.positive, self.negative + other.negative)
 
-    def __sub__(self: Integer, obj: object) -> Integer:
-        if not isinstance(obj, Integer):
-            raise TypeError(f"{obj} is not 'Integer'")
+    def __sub__(self: Integer, other: object) -> Integer:
+        if not isinstance(other, Integer):
+            raise TypeError(f"{other} is not 'Integer'")
         # (a - b) - (c - d) = (a + d) - (b + c)
-        return Integer(self.positive + obj.negative, self.negative + obj.positive)
+        return Integer(self.positive + other.negative, self.negative + other.positive)
 
-    def __mul__(self: Integer, obj: object) -> Integer:
-        if not isinstance(obj, Integer):
-            raise TypeError(f"{obj} is not 'Integer'")
+    def __mul__(self: Integer, other: object) -> Integer:
+        if not isinstance(other, Integer):
+            raise TypeError(f"{other} is not 'Integer'")
         # (a - b) * (c - d) = (a * c + b * d) - (a * d + b * c)
         return Integer(
-            self.positive * obj.positive + self.negative * obj.negative,
-            self.positive * obj.negative + self.negative * obj.positive,
+            self.positive * other.positive + self.negative * other.negative,
+            self.positive * other.negative + self.negative * other.positive,
         )
 
     def __pos__(self: Integer) -> Integer:
@@ -95,6 +95,22 @@ class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural
 
     def __int__(self: Integer) -> int:
         return int(self.positive) - int(self.negative)
+
+    @property
+    def sign(self: Integer) -> Integer:
+        """sign of integer
+
+        Args:
+            self (Integer): Integer instance
+
+        Returns:
+            int: +1, -1, or 0
+        """
+        if self.positive == self.negative:
+            return Integer(ZERO, ZERO)
+        if self.positive > self.negative:
+            return Integer(ZERO.successor, ZERO)
+        return Integer(ZERO, ZERO.successor)
 
 
 def create_integer_from_int(integer: int) -> Integer:

@@ -84,6 +84,17 @@ def test_int() -> None:
     assert int(minus_one) == -1
 
 
+def test_sign() -> None:
+    """Test sign"""
+    zero = Integer(ZERO, ZERO)
+    minus_one = Integer(ZERO.successor, ZERO.successor.successor)
+    minus_two = Integer(ZERO, ZERO.successor.successor)
+    one = Integer(ZERO.successor, ZERO)
+    assert zero.sign == zero
+    assert minus_two.sign == minus_one
+    assert one.sign == one
+
+
 def test_create_from_int() -> None:
     """Test create_integer_number_from_int"""
     zero = Integer(ZERO, ZERO)
