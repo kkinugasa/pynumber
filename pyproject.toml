@@ -24,6 +24,8 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
+# When a coverage report is necessary, add this option::
+# --cov-report=html
 addopts = "-rsxX -l --tb=short --strict-markers --doctest-modules --cov=pynumber"
 xfail_strict = true
 testpaths = [

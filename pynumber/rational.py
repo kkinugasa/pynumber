@@ -103,6 +103,8 @@ class Rational(
         if not isinstance(other, Rational):
             raise TypeError(f"{other} is not 'Rational'")
         # (a / b) * (c / d) = (a * c) / (b * d)
-        return Integer(
+        return Rational(
             self.numerator * other.numerator, self.denominator * other.denominator
         )
+
+    # TODO: div, unary operator
