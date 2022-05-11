@@ -22,7 +22,7 @@ format:
 	@poetry run black .
 
 lint:
-	@poetry run pylint -d C $(PACKAGE)
+	@poetry run pylint -d C,fixme $(PACKAGE)
 	@poetry run mypy .
 
 test:
