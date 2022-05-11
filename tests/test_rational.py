@@ -7,7 +7,7 @@ from pynumber import Integer, Rational, create_integer_from_int
 def test_new() -> None:
     """Test new"""
     Rational(Integer(), Integer().successor)
-    with pytest.raises(ValueError):
+    with pytest.raises(ZeroDivisionError):
         _ = Rational(Integer(), Integer())
 
 
@@ -84,3 +84,20 @@ def test_multiplication() -> None:
     )
     with pytest.raises(TypeError):
         _ = zero * Integer()
+
+
+def test_division() -> None:
+    """Test multiplication"""
+    zero = Rational(create_integer_from_int(0), create_integer_from_int(1))
+    minus_one_over_two = Rational(
+        create_integer_from_int(-1), create_integer_from_int(2)
+    )
+    two_over_three = Rational(create_integer_from_int(2), create_integer_from_int(3))
+    assert zero / two_over_three == zero
+    assert minus_one_over_two / two_over_three == Rational(
+        create_integer_from_int(-3), create_integer_from_int(4)
+    )
+    with pytest.raises(TypeError):
+        _ = zero / Integer()
+    with pytest.raises(ZeroDivisionError):
+        _ = zero / zero

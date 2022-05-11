@@ -33,13 +33,13 @@ class Rational(
             denominator (Integer): denominator
 
         Raises:
-            ValueError: denominator is zero
+            ZeroDivisionError: denominator is zero
 
         Returns:
             Rational: rational number
         """
         if denominator == Integer():
-            raise ValueError("denominator is zero")
+            raise ZeroDivisionError("division by zero")
 
         #### For better performance, a canonical representative is selected,
         #### but it also works as follows::
@@ -108,4 +108,12 @@ class Rational(
             self.numerator * other.numerator, self.denominator * other.denominator
         )
 
-    # TODO: div, unary operator
+    def __truediv__(self: Rational, other: object) -> Rational:
+        if not isinstance(other, Rational):
+            raise TypeError(f"{other} is not 'Rational'")
+        # (a / b) / (c / d) = (a * d / (b * c)
+        return Rational(
+            self.numerator * other.denominator, self.denominator * other.numerator
+        )
+
+    # TODO: unary operator
