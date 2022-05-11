@@ -5,7 +5,6 @@ import math
 from typing import NamedTuple
 
 from pynumber.integer import Integer, create_integer_from_int
-from pynumber.natural import ZERO
 
 
 class Rational(
@@ -20,7 +19,9 @@ class Rational(
     """
 
     def __new__(
-        cls: type[Integer], numerator: Integer, denominator: Integer
+        cls: type[Integer],
+        numerator: Integer = Integer(),
+        denominator: Integer = Integer.successor,
     ) -> Rational:
         """new
 
@@ -37,7 +38,7 @@ class Rational(
         Returns:
             Rational: rational number
         """
-        if denominator == Integer(ZERO, ZERO):
+        if denominator == Integer():
             raise ValueError("denominator is zero")
 
         #### For better performance, a canonical representative is selected,

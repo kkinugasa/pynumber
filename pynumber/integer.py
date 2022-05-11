@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import NamedTuple
 
-from pynumber.natural import ZERO, Natural, create_natural_from_int
+from pynumber.natural import Natural, create_natural_from_int
 
 
 class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural)])):
@@ -17,7 +17,11 @@ class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural
         https://math.stackexchange.com/questions/1695198/constructing-integers-as-equivalence-classes-of-pairs-of-natural-numbers
     """
 
-    def __new__(cls: type[Integer], positive: Natural, negative: Natural) -> Integer:
+    def __new__(
+        cls: type[Integer],
+        positive: Natural = Natural(),
+        negative: Natural = Natural(),
+    ) -> Integer:
         """new
 
         For better performance, a canonical representative is selected,
@@ -97,6 +101,30 @@ class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural
         return int(self.positive) - int(self.negative)
 
     @property
+    def successor(self: Integer) -> Integer:
+        """Get a successor number
+
+        Args:
+            self (Integer): Integer instance
+
+        Returns:
+            Integer: successor
+        """
+        return Integer(self.positive.successor, self.negative)
+
+    @property
+    def predecessor(self: Integer) -> Integer:
+        """Get a predecessor number
+
+        Args:
+            self (Integer): Integer instance
+
+        Returns:
+            Integer: predecessor
+        """
+        return Integer(self.positive, self.negative.successor)
+
+    @property
     def sign(self: Integer) -> Integer:
         """sign of integer
 
@@ -107,10 +135,10 @@ class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural
             int: +1, -1, or 0
         """
         if self.positive == self.negative:
-            return Integer(ZERO, ZERO)
+            return Integer()
         if self.positive > self.negative:
-            return Integer(ZERO.successor, ZERO)
-        return Integer(ZERO, ZERO.successor)
+            return Integer().successor
+        return Integer().predecessor
 
 
 def create_integer_from_int(integer: int) -> Integer:
