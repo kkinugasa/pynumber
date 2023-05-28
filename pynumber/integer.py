@@ -132,7 +132,7 @@ class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural
             self (Integer): Integer instance
 
         Returns:
-            int: +1, -1, or 0
+            Integer: +1, -1, or 0
         """
         if self.positive == self.negative:
             return Integer()
