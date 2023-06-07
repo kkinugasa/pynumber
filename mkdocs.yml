@@ -15,18 +15,19 @@ nav:
 
 theme:
   name: "material"
+
+watch:
+  - pynumber
+
 plugins:
   - search
   # https://mkdocstrings.github.io/python/usage/
   - mkdocstrings:
-      watch:
-        - pynumber
       default_handler: python
       handlers:
         python:
-          selection:
+          options:
             docstring_style: google
-          rendering:
             show_root_heading: true
             show_root_toc_entry: true
             show_root_full_path: true
