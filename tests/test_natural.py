@@ -1,4 +1,5 @@
 """Test code of Natural class"""
+
 import pytest
 
 from pynumber import Natural, create_natural_from_int

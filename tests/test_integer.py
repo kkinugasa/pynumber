@@ -1,4 +1,5 @@
 """Test Integer class"""
+
 import pytest
 
 from pynumber import Integer, Natural, create_integer_from_int

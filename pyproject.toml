@@ -1,99 +1,55 @@
-[tool.poetry]
+[project]
 name = "pynumber"
 version = "0.1.0"
 description = "Set-theoretic construction of numbers"
-authors = ["kkinugasa <kimiakikinugasa@gmail.com>"]
+authors = [{ name = "kkinugasa", email = "kimiakikinugasa@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
 
-[tool.poetry.dependencies]
-python = "^3.10"
-
-[tool.poetry.dev-dependencies]
-black = "*"
-isort = "*"
-pylint = "*"
-mypy = "*"
-pytest = "*"
-pytest-cov = "*"
-pytest-sugar = "*"
-coverage-badge = "*"
-mkdocs-material = "*"
-mkdocstrings-python = "*"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.pytest.ini_options]
-# When a coverage report is necessary, add this option::
-# --cov-report=html
-addopts = "-rsxX -l --tb=short --strict-markers --doctest-modules --cov=pynumber"
-xfail_strict = true
-testpaths = [
-    "tests"
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "pytest-sugar",
+    "coverage-badge",
+    "mkdocs-material",
+    "mkdocstrings-python",
 ]
 
-# Black compatible configurations
-# https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#isort
-[tool.isort]
-profile = "black"
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
 
-# Black compatible configurations
-# https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#pylint
-[tool.pylint.format]
-max-line-length = "88"
 
-## mypy supports pyproject.toml
-## https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml-file
-[tool.mypy]
-## https://mypy.readthedocs.io/en/stable/config_file.html
-namespace_packages = true
 
-## Disallow dynamic typing
-disallow_any_unimported = true
-disallow_any_expr = true
-disallow_any_decorated = true
-disallow_any_explicit = true
-disallow_any_generics = true
-disallow_subclassing_any = true
+[tool.pytest.ini_options]
+# When a coverage report is necessary, add this option:
+# --cov-report=html
+addopts = "-rsxX -l --tb=short --strict-markers --doctest-modules"
+xfail_strict = true
+testpaths = ["tests"]
+[tool.ruff]
+line-length = 88
+target-version = "py310"
 
-## Untyped definitions and calls
-disallow_untyped_calls = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-disallow_untyped_decorators = true
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "UP", # pyupgrade
+]
+ignore = []
 
-## None and Optional handlng
-no_implicit_optional = true
-strict_optional = true
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
 
-## Configuring warnings
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_no_return = true
-warn_return_any = true
-warn_unreachable = true
-
-## Suppressing errors
-show_none_errors = true
-ignore_errors = true
-
-## Miscellaneous strictness flags
-allow_untyped_globals = true
-allow_redefinition = false
-local_partial_types = true
-# disable_error_codex =
-implicit_reexport = false
-strict_equality = true
-
-## Configuring error messages
-# show_error_context = true
-show_column_numbers = true
-show_error_codes = true
-pretty = true
-color_output = true
-error_summary = true
-# show_absolute_path = true
-
-## Miscellaneous
-warn_unused_configs = true
+[tool.pyright]
+include = ["src", "tests"]
+pythonVersion = "3.10"
+typeCheckingMode = "basic"
+venvPath = "."
+venv = ".venv"

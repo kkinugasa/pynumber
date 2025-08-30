@@ -1,4 +1,5 @@
 """Set-theoretic construction of rational numbers"""
+
 from __future__ import annotations
 
 import math
@@ -19,18 +20,18 @@ class Rational(
     """
 
     def __new__(
-        cls: type[Integer],
-        numerator: Integer = Integer(),
-        denominator: Integer = Integer.successor,
+        cls: type[Rational],
+        numerator: Integer | None = None,
+        denominator: Integer | None = None,
     ) -> Rational:
         """new
 
         change denominator to be positive
 
         Args:
-            cls (type[Integer]): cls
+            cls (type[Rational]): cls
             numerator (Integer): numerator
-            denominator (Integer): denominator
+            denominator (Integer): denominator (defaults to 1)
 
         Raises:
             ZeroDivisionError: denominator is zero
@@ -38,6 +39,10 @@ class Rational(
         Returns:
             Rational: rational number
         """
+        if denominator is None:
+            denominator = create_integer_from_int(1)
+        if numerator is None:
+            numerator = Integer()
         if denominator == Integer():
             raise ZeroDivisionError("division by zero")
 
@@ -51,10 +56,12 @@ class Rational(
         int_numerator = sign * abs(int(numerator))
         int_denominator = abs(int(denominator))
         gcd = math.gcd(int_numerator, int_denominator)
-        return super().__new__(
+        return tuple.__new__(
             cls,
-            create_integer_from_int(int_numerator // gcd),
-            create_integer_from_int(int_denominator // gcd),
+            (
+                create_integer_from_int(int_numerator // gcd),
+                create_integer_from_int(int_denominator // gcd),
+            ),
         )
 
     def __eq__(self: Rational, other: object) -> bool:
@@ -116,4 +123,4 @@ class Rational(
             self.numerator * other.denominator, self.denominator * other.numerator
         )
 
-    # TODO: unary operator
+    # unary operator can be added if needed in the future

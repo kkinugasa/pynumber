@@ -1,9 +1,12 @@
 """Set-theoretic construction of integers"""
+
 from __future__ import annotations
 
-from typing import NamedTuple
+from typing import NamedTuple, TypeVar
 
 from pynumber.natural import Natural, create_natural_from_int
+
+TInteger = TypeVar("TInteger", bound="Integer")
 
 
 class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural)])):
@@ -18,10 +21,10 @@ class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural
     """
 
     def __new__(
-        cls: type[Integer],
-        positive: Natural = Natural(),
-        negative: Natural = Natural(),
-    ) -> Integer:
+        cls: type[TInteger],
+        positive: Natural | None = None,
+        negative: Natural | None = None,
+    ) -> TInteger:
         """new
 
         For better performance, a canonical representative is selected,
@@ -37,10 +40,14 @@ class Integer(NamedTuple("Integer", [("positive", Natural), ("negative", Natural
         Returns:
             Integer: integer
         """
-        integer = int(positive) - int(negative)
-        pos = create_natural_from_int(max(integer, 0))
-        neg = create_natural_from_int(max(-integer, 0))
-        return super().__new__(cls, pos, neg)
+        # Avoid mutable/call defaults; compute here when None
+        pos_in = positive if positive is not None else create_natural_from_int(0)
+        neg_in = negative if negative is not None else create_natural_from_int(0)
+
+        value = int(pos_in) - int(neg_in)
+        pos = create_natural_from_int(max(value, 0))
+        neg = create_natural_from_int(max(-value, 0))
+        return tuple.__new__(cls, (pos, neg))
 
     def __eq__(self: Integer, other: object) -> bool:
         return (

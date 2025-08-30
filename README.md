@@ -13,13 +13,15 @@ See <https://en.wikipedia.org/wiki/Set-theoretic_definition_of_natural_numbers>
 
 ```sh
 git clone https://github.com/kkinugasa/pynumber.git
-poetry install
+cd pynumber
+uv venv --seed
+uv pip install -e .[dev]
 ```
 
-### Install with poetry
+### Install with uv
 
 ```sh
-poetry add git+https://github.com/kkinugasa/pynumber.git
+uv add --dev git+https://github.com/kkinugasa/pynumber.git
 ```
 
 ### Install with pip
@@ -30,8 +32,8 @@ pip install git+https://github.com/kkinugasa/pynumber.git
 
 ## Documentation
 
-After pulling this repo and running `poetry install`, run the command:
+After pulling this repo and installing dev deps with uv, run the command:
 
 ```sh
-poetry run mkdocs serve
+uv run mkdocs serve
 ```

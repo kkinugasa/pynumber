@@ -1,4 +1,5 @@
 """Set-theoretic construction of natural numbers"""
+
 from __future__ import annotations
 
 
